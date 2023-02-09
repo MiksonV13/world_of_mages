@@ -255,7 +255,7 @@ def battle(eq,character,stats):
     for a in range(len(spe)):
         dic[spe[a]]=a+1
     enemy = random.randint(0, 100)*deep
-    weapons=[["small wand",75,0.30],["big wand",30,0.75],["catalyst",50,0.50]]
+    weapons=[["small wand",60,0.30],["big wand",40,0.75],["catalyst",50,0.50]]
     lvl=[300,600,1000]
     en=[goblin,hobgoblin,kingoblin]
     if enemy>900:
