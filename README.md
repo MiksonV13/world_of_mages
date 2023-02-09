@@ -1,5 +1,7 @@
 # world_of_mages
 
+WERSJA EXE -https://gofile.io/d/p6lq6o
+
 Gra textowa World of mages
 
 Elementy projektu:
