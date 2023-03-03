@@ -1,6 +1,6 @@
 # world_of_mages
 
-WERSJA EXE -https://gofile.io/d/p6lq6o
+WERSJA EXE -https://drive.google.com/file/d/1NPpLMB6JEZfPfaHL3nR8aWx9kRS97YMw/view?usp=sharing
 
 Gra textowa World of mages
 
