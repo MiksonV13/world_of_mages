@@ -286,10 +286,13 @@ def battle(eq,character,stats):
                     dmg_get=(random.randint(3,7)*enn.ap)*(100-stats.armor)/100
                     dmg_get=int(round(dmg_get,0))
                     stats.hp-=dmg_get
+                    print("{0} is faster than you".format(name))
+                    time.sleep(1)
                     print("He deals you {0} dmg".format(dmg_get))
                     time.sleep(1)
                 else:
                     print("#####################################")
+                    print("You are faster than {0}.".format(name))
                     print("your hp: " + str(stats.hp) + "\{0}".format(maxhp))
                     print("Your mana: " + str(stats.mana) + "\{0}".format(maxmp))
                     print("Your hp potion: {0}".format(eq.potion))
