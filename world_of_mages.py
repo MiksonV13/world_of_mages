@@ -461,7 +461,7 @@ def magic_tower(character, eq):
                         eq.tier3 = 1
                         eq.gold -= slo[b]
                         bought(eq, character)
-                    elif eq.gold < slo[b] and kup == 0:
+                    elif eq.gold < slo[b] and tak == 0:
                         print("You dont have enought money")
                         time.sleep(1)
                         magic_tower(character, eq)
