@@ -11,11 +11,9 @@ class Mage():
         self.weapon= weapon
     def postac(self):
         print("Your name is "+self.name+" you are a "+self.typ+" aspect mage "+ ",user of "+ self.weapon)
-    def now(self):
-        print("Your name is " + self.name + " you are a " + self.typ + " aspect mage " + ",user of " + self.weapon)
     def __del__(self):
-        first = open("config/character.txt", "w")
-        first.write(self.name + "\n" + self.typ + "\n" + self.weapon + "\n" )
+        with open("config/character.txt", "w") as first:
+            first.write(self.name + "\n" + self.typ + "\n" + self.weapon + "\n" )
 class Things():
     def __init__(self,robe="Basic Robe",ring1="Basic Ring",ring2="Basic Ring",necklace="Basic Necklace",gold=100,potion = 0,tier1= 0,tier2 =0,tier3= 0):
         self.robe=robe
@@ -29,13 +27,14 @@ class Things():
         self.tier3=tier3
     def eqw(self):
         print("Robe: "+self.robe+"\nRing1: "+self.ring1+"\nRing2: "+self.ring2+"\nNecklace: "+self.necklace+"\nGold: "+str(self.gold)+"\nPotion: "+str(self.potion))
+
     def __del__(self):
-        two = open("config/eq.txt", "w")
-        two.write(self.robe + "\n" + self.ring1 + "\n" + self.ring2 + "\n" + self.necklace + "\n" + str(self.gold)+"\n"+str(self.potion)+"\n"+str(self.tier1)+"\n"+str(self.tier2)+"\n"+str(self.tier3))
+        with open("config/eq.txt", "w") as two:
+            two.write(self.robe + "\n" + self.ring1 + "\n" + self.ring2 + "\n" + self.necklace + "\n" + str(self.gold)+"\n"+str(self.potion)+"\n"+str(self.tier1)+"\n"+str(self.tier2)+"\n"+str(self.tier3))
     def save(self):
-        THREE = open("config/eq.txt", "w")
-        THREE.write(self.robe + "\n" + self.ring1 + "\n" + self.ring2 + "\n" + self.necklace + "\n" + str(self.gold)+"\n"+str(self.potion)+"\n"+str(self.tier1)+"\n"+str(self.tier2)+"\n"+str(self.tier3))
-        THREE.close()
+        with open("config/eq.txt", "w") as THREE:
+            THREE.write(self.robe + "\n" + self.ring1 + "\n" + self.ring2 + "\n" + self.necklace + "\n" + str(self.gold)+"\n"+str(self.potion)+"\n"+str(self.tier1)+"\n"+str(self.tier2)+"\n"+str(self.tier3))
+
 
 class Stat():
     basehp = 10
@@ -64,13 +63,12 @@ class Spells():
         self.manac=manac
         self.name=name
 
+
 def start():
-    new = open("config/character.txt", "r")
     if os.stat("config/character.txt").st_size==0:
         print("#####################################")
-        czy=open("config/czy.txt","w")
-        czy.write(str(1))
-        czy.close()
+        with open("config/czy.txt","w") as czy:
+            czy.write(str(1))
         elem = ["wind", "fire", "water", "earth"]
         weap = ["small wand", "big wand", "catalyst"]
         print("Welcome in the world of Mages")
@@ -91,15 +89,14 @@ def start():
             weapon=weap[int(weapon)-1]
             character=Mage(element,weapon,name)
             character.postac()
-            static=open("config/character.txt","w")
-            static.write(name+"\n"+element+"\n"+weapon+"\n")
-            static.close()
+            with open("config/character.txt","w") as static:
+                static.write(name+"\n"+element+"\n"+weapon+"\n")
             print ("1-to continue")
             tak=input()
             if tak=="1":
-                static = open("config/character.txt", "w")
-                static.write(character.name + "\n" + element + "\n" + weapon + "\n")
-                static.close()
+                with open("config/character.txt", "w") as static:
+                    static.write(character.name + "\n" + element + "\n" + weapon + "\n")
+
                 eq = Things()
                 eq.save()
                 daily_shop()
@@ -116,9 +113,8 @@ def start():
                 if czy=="1":
                     randcha()
                 else:
-                    static = open("config/character.txt", "w")
-                    static.write(character.name + "\n" + element + "\n" + weapon + "\n" )
-                    static.close()
+                    with open("config/character.txt", "w") as static:
+                        static.write(character.name + "\n" + element + "\n" + weapon + "\n" )
                     eq = Things()
                     daily_shop()
                     eq.save()
@@ -128,19 +124,21 @@ def start():
             sys.exit()
     else:
         main()
+
+
 def main():
     print("#####################################")
     tab=[]
     tab2 = []
-    char= open("config/character.txt","r")
-    char=char.readlines()
-    for pos in char:
-        tab.append(pos.strip())
+    with open("config/character.txt","r") as char:
+        char=char.readlines()
+        for pos in char:
+            tab.append(pos.strip())
     character=Mage(tab[1],tab[2],tab[0])
-    ek = open("config/eq.txt", "r")
-    ek = ek.readlines()
-    for pos in ek:
-        tab2.append(pos.strip())
+    with open("config/eq.txt", "r") as ek:
+        ek = ek.readlines()
+        for pos in ek:
+            tab2.append(pos.strip())
     eq = Things(tab2[0], tab2[1], tab2[2], tab2[3], int(tab2[4]),int(tab2[5]),int(tab2[6]),int(tab2[7]),int(tab2[8]))
     sta=items_stat(eq.robe,eq.ring1,eq.ring2,eq.necklace)
     stats=ChrStat(sta[0],sta[1],sta[2],sta[3])
@@ -152,15 +150,16 @@ def main():
             print("You are to exhausted to fight")
             czy.close()
             main()
-        czy.write("0")
-        czy.close()
-        global maxhp
-        global maxmp
-        global deep
-        maxhp=stats.hp
-        maxmp=stats.mana
-        deep=0
-        dungeon(eq, character, stats)
+        else:
+            czy.write("0")
+            czy.close()
+            global maxhp
+            global maxmp
+            global deep
+            maxhp=stats.hp
+            maxmp=stats.mana
+            deep=0
+            dungeon(eq, character, stats)
     elif what=="2":
         shop1(eq)
     elif what =="3":
@@ -171,7 +170,7 @@ def main():
         begging(eq)
     elif what=="6":
         print("#####################################")
-        character.now()
+        character.postac()
         eq.eqw()
         stats.ActuallyStat()
         main()
@@ -186,7 +185,7 @@ def dungeon(eq,character,stats):
     print("your hp: "+str(stats.hp)+"\{0}".format(maxhp))
     print("Your mana: "+str(stats.mana)+"\{0}".format(maxmp))
     print("Your hp potion: {0}".format(eq.potion))
-    ile=1
+
     print("1-Go ahead")
     print("2-Use hp potion")
     print("3-Rest")
@@ -256,7 +255,7 @@ def battle(eq,character,stats):
         dic[spe[a]]=a+1
     enemy = random.randint(0, 100)*deep
     weapons=[["small wand",60,0.30],["big wand",40,0.75],["catalyst",50,0.50]]
-    lvl=[300,600,1000]
+
     en=[goblin,hobgoblin,kingoblin]
     if enemy>900:
         co=2
@@ -409,10 +408,9 @@ def magic_tower(character, eq):
     earthspells = ["Earthball", "Call the Earth", "Earthquake"]
     typs = {"wind": windspells, "fire": firespells, "water": waterspells, "earth": earthspells}
     slo = {}
-    zy = ""
+
     for a in typs.keys():
         if character.typ == a:
-            zy = character.typ
             tr = 0
             if eq.tier1 == 0:
                 print('{0}-Learn "{1}" spell 150g'.format(str(ile), typs[a][tr]))
@@ -461,45 +459,43 @@ def magic_tower(character, eq):
                         eq.tier3 = 1
                         eq.gold -= slo[b]
                         bought(eq, character)
-                    elif eq.gold < slo[b] and tak == 0:
+                    elif eq.gold < slo[b] and tak==0:
                         print("You dont have enought money")
                         time.sleep(1)
                         magic_tower(character, eq)
                     tak += 1
 def daily_shop():
     listItems = ["Better Ring", "Best Ring", "Better Necklace", "Best Necklace", "Better Robe", "Best Robe"]
-    sklep=open("config/shop.txt","w")
-    for a in range(random.randint(2, 4)):
-        przedmiot = listItems[random.randint(0, len(listItems) - 1)]
-        listItems.remove(przedmiot)
-        if re.match("Better", przedmiot):
-            c = random.randint(75, 100)
-            sklep.write(przedmiot+"\n"+str(c)+"\n")
-        elif re.match("Best", przedmiot):
-            c = random.randint(300, 500)
-            sklep.write(przedmiot+"\n"+str(c)+"\n")
-    sklep.close()
+    with open("config/shop.txt","w") as sklep:
+        for a in range(random.randint(2, 4)):
+            przedmiot = listItems[random.randint(0, len(listItems) - 1)]
+            listItems.remove(przedmiot)
+            if re.match("Better", przedmiot):
+                c = random.randint(75, 100)
+                sklep.write(przedmiot+"\n"+str(c)+"\n")
+            elif re.match("Best", przedmiot):
+                c = random.randint(300, 500)
+                sklep.write(przedmiot+"\n"+str(c)+"\n")
 def shop1(eq):
     print("#####################################")
     print("Welcome in my Shop\nBuy by select number\nYour money:{0} \nToday product available:".format(str(eq.gold)))
-    sklep=open("config/shop.txt","r")
-    counter=0
-    prze=[]
-    cen=[]
-    for a in sklep:
-        counter+=1
-        if counter%2==0:
-            cen.append(a.strip())
-        else:
-            prze.append(a.strip())
-    counter=0
+    with open("config/shop.txt", "r") as sklep:
 
+        counter=0
+        prze=[]
+        cen=[]
+        for a in sklep:
+            counter+=1
+            if counter%2==0:
+                cen.append(a.strip())
+            else:
+                prze.append(a.strip())
+        counter=0
     for a in range(len(cen)):
         counter+=1
         print(str(counter) + " " + prze[a] + ": " + str(cen[a]) + " gold")
     print(str(counter+1)+" Return")
     co=input()
-    it=["Necklace","Robe","Ring"]
     if counter==0:
         main()
     else:
@@ -530,10 +526,11 @@ def shop1(eq):
                             eq.save()
                     prze.pop(a)
                     cen.pop(a)
-                    skl = open("config/shop.txt", "w")
-                    for a in range(len(cen)):
-                        skl.write(prze[a] + "\n" + str(cen[a]) + "\n")
-                    skl.close()
+                    with open("config/shop.txt", "w") as skl:
+
+                        for a in range(len(cen)):
+                            skl.write(prze[a] + "\n" + str(cen[a]) + "\n")
+
                     print("Do you wanna buy something else?")
                     print("1-Yes")
                     print("2-No")
@@ -555,9 +552,8 @@ def tavern(eq):
     print("3-Exit")
     co=input()
     if co=="1" and eq.gold>=5:
-        czy=open("config/czy.txt","w")
-        czy.write("1")
-        czy.close()
+        with open("config/czy.txt","w") as czy :
+            czy.write("1")
         daily_shop()
         print("You slepp well")
         eq.gold-=5
@@ -572,6 +568,7 @@ def tavern(eq):
     elif co=="3":
         main()
 def gambling(eq):
+    global wybur
     print("Your money: {}".format(eq.gold))
     print("What is your bet?")
     ile=input()
@@ -593,17 +590,17 @@ def gambling(eq):
     opp=tab[random.randint(0,2)]
     what=input()
     if what=="1":
-        you="Stone"
+        wybur="Stone"
     elif what=="2":
-        you="Paper"
+        wybur="Paper"
     elif what=="3":
-        you="Scissors"
+        wybur="Scissors"
     print("Your opponent pick {0}".format(opp))
     time.sleep(0.8)
-    if opp==you:
+    if opp==wybur:
         print("Draw\nWanna play again?\n1-Yes\n2-No")
         again(eq)
-    elif re.match("Stone",you) and re.match("Scissors",opp) or re.match("Paper",you) and re.match("Stone",opp) or re.match("Scissors",you) and re.match("Paper",opp):
+    elif re.match("Stone",wybur) and re.match("Scissors",opp) or re.match("Paper",wybur) and re.match("Stone",opp) or re.match("Scissors",wybur) and re.match("Paper",opp):
         print("You win")
         eq.gold+=bet
         again(eq)
@@ -640,9 +637,6 @@ def items_stat(a,b,c,d):
     statBasisRobe = Stat()
     statBetterRobe = Stat(5, 5, 10,15)
     statBestRobe = Stat(10, 10, 25,20)
-
-    listItems = ["Basic Ring", "Better Ring", "Best Ring", "Basic Necklace", "Better Necklace", "Best Necklace",
-                 "Basic Robe", "Better Robe", "Best Robe"]
     items = {"Basic Ring": statBasicRing, "Better Ring": statBetterRing, "Best Ring": statBestRing,
              "Basic Necklace": statBasicNeclake, "Better Necklace": statBetterNeclake, "Best Necklace": statBestNeclake,
              "Basic Robe": statBasisRobe, "Better Robe": statBetterRobe, "Best Robe": statBestRobe}
