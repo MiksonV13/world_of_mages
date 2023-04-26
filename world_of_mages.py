@@ -3,7 +3,7 @@ import sys
 import os
 import re
 import time
-import pathlib
+from pathlib import Path
 
 
 class Mage:
@@ -79,7 +79,7 @@ class Spells:
 def start():
     if os.stat("config/character.txt").st_size == 0:
         print("#####################################")
-        p = pathlib.Path("config/czy.txt")
+        p = Path("config/czy.txt")
         with open(p, "w") as czy:
             czy.write(str(1))
         elem = ["wind", "fire", "water", "earth"]
@@ -103,13 +103,13 @@ def start():
             weapon = weap[int(weapon)-1]
             character = Mage(element, weapon, name)
             character.postac()
-            p = pathlib.Path("config/character.txt")
+            p = Path("config/character.txt")
             with open(p, "w") as static:
                 static.write(name+"\n"+element+"\n"+weapon+"\n")
             print("1-to continue")
             tak = input()
             if tak == "1":
-                p = pathlib.Path("config/character.txt")
+                p = Path("config/character.txt")
                 with open(p, "w") as static:
                     static.write(character.name + "\n" + element + "\n" + weapon + "\n")
 
@@ -129,7 +129,7 @@ def start():
                 if czy == "1":
                     randcha()
                 else:
-                    p = pathlib.Path("config/character.txt")
+                    p = Path("config/character.txt")
                     with open(p, "w") as static:
                         static.write(character.name + "\n" + element + "\n" + weapon + "\n")
                     eq = Things()
@@ -147,13 +147,13 @@ def main():
     print("#####################################")
     tab = []
     tab2 = []
-    p = pathlib.Path("config/character.txt")
+    p = Path("config/character.txt")
     with open(p, "r") as char:
         char = char.readlines()
         for _ in char:
             tab.append(_.strip())
     character = Mage(tab[1], tab[2], tab[0])
-    p = pathlib.Path("config/eq.txt")
+    p = Path("config/eq.txt")
     with open(p, "r") as ek:
         ek = ek.readlines()
         for _ in ek:
@@ -490,7 +490,7 @@ def magic_tower(character, eq):
 
 def daily_shop():
     list_items = ["Better Ring", "Best Ring", "Better Necklace", "Best Necklace", "Better Robe", "Best Robe"]
-    p = pathlib.Path("config/shop.txt")
+    p = Path("config/shop.txt")
     with open(p, "w") as sklep:
         for _ in range(random.randint(2, 4)):
             przedmiot = list_items[random.randint(0, len(list_items) - 1)]
@@ -506,7 +506,7 @@ def daily_shop():
 def shop1(eq):
     print("#####################################")
     print("Welcome in my Shop\nBuy by select number\nYour money:{0} \nToday product available:".format(str(eq.gold)))
-    p = pathlib.Path("config/shop.txt")
+    p = Path("config/shop.txt")
     with open(p, "r") as sklep:
 
         counter = 0
@@ -554,7 +554,7 @@ def shop1(eq):
                             eq.save()
                     prze.pop(_)
                     cen.pop(_)
-                    p = pathlib.Path("config/shop.txt")
+                    p = Path("config/shop.txt")
                     with open(p, "w") as skl:
 
                         for _ in range(len(cen)):
@@ -583,7 +583,7 @@ def tavern(eq):
     print("3-Exit")
     co = input()
     if co == "1" and eq.gold >= 5:
-        p = pathlib.Path("config/czy.txt")
+        p = Path("config/czy.txt")
         with open(p, "w") as czy:
             czy.write("1")
         daily_shop()
