@@ -54,4 +54,3 @@ Dmg jaki zadamy jest zależny od: poziomu armoru przeciwnika, typu naszej broni,
 
 Dmg który otrzymamy jest zależny od: poziomu naszego armoru, oraz poziomu mocy przeciwnika
 Walka kończy się gdy hp potwora sięgnie 0 – wtedy wygrywamy i możemy iść dalej, lub gdy nasze hp sięgnie 0- wtedy przegrywamy ,tracimy cały gold oraz poty i zostajemy wysłani do menu głównego
-
