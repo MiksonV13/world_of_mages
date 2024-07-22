@@ -1,5 +1,8 @@
 # world_of_mages
 
+gra ma 2 wersje , w jednej jest obsługa tworzenia konta gdzie dane użytkownika są zapisywane w bazie danych za pomocą google cloud ,
+w drugiej wersji do której wstawiam link do pobrania pliku exe dane użytkownika są zapisywane lokalnie i nie ma logowania.
+
 WERSJA EXE -https://drive.google.com/file/d/1cMUxirvwy5i5AChoF-HFHhh0iu1edjCv/view?usp=sharing
 
 Gra textowa World of mages
