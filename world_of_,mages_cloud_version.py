@@ -9,7 +9,7 @@ mydb = mysql.connector.connect(
     host="34.29.42.36",
     user="root",
     database="world_of_mages",
-    password="Jablko100",
+    password="V4S7Da6pns91h1G",
     port=3306
 )
 
